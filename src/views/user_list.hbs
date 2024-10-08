@@ -1,0 +1,20 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Login</th>
+      <th scope="col">Email</th>
+
+    </tr>
+  </thead>
+  <tbody class="table-striped">
+    {{#each users}}
+      <tr>
+        <th scope="row">{{id}}</th>
+        <td>{{login}}</td>
+        <td>{{email}}</td>
+      </tr>
+    {{/each}}
+
+  </tbody>
+</table>
