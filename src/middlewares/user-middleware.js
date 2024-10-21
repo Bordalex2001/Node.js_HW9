@@ -1,6 +1,7 @@
 import { users } from "../data/users.js";
 import bcrypt from "bcrypt";
 import validator from "validator";
+import authToken from "../auth-token.js";
 import path from "node:path";
 
 export const checkUser = (req, res, next) => {
@@ -51,13 +52,56 @@ export const createUser = (req, res, next) => {
 export const authUser = (req, res, next) => {
     if (req.body && req.body.login && req.body.password){
         const { login, password } = req.body;
-        console.log(req.body);
+        //console.log(req.body);
+        const token = authToken.generateToken(req.body);
         const user = users?.find((el) => el.login == login);
+        console.log(user);
         if(bcrypt.compareSync(password, user.password)){
             req.body.email = user.email;
+            res.json({ token: token });
             next();
             return;
         }
     }
     return res.status(400).redirect("/");
-}
+};
+
+// export const feedbackUser = (req, res, next) => {
+//     if(req.body && req.body.email && req.body.subject && req.body.message){
+//         const { email, subject, message } = req.body;
+//         const mailOpt = {
+//             from: "Oleksii Bordiuzhevych <email>",
+//             to: email,
+//             subject: subject,
+//             text: message
+//         };
+    
+//         const trans = nodemailer.createTransport({
+//             host: "smtp.gmail.com",
+//             port: 587,
+//             auth: {
+//                 user: "email",
+//                 pass: PASS
+//             },
+//             tls: {
+//                 rejectUnauthorized: true,
+//                 minVersion: "TLSv1.2"
+//             }
+//         });
+
+//         let result = "";
+//         trnas.sendMail(mailOpt, (err, info) => {
+//             console.log(err, info);
+//             if(err){
+//                 console.log(err);
+//                 res.status(400).redirect("/");
+//             }
+//             else{
+//                 console.log(info);
+//                 res.status(201).redirect("/");
+//             }
+//             return;
+//         });
+//     }
+//     next();
+//};

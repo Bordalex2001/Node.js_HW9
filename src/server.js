@@ -8,6 +8,8 @@ import siteRoutes from "./routes/site-routes.js";
 import userRoutes from "./routes/user-routes.js";
 import { checkUser } from "./middlewares/user-middleware.js";
 const PORT = process.env.PORT || 3000;
+import { createClient } from "redis";
+import RedisStore from "connect-redis";
 //#region options for hbs
 const hbs = exphbs.create({
     defaultLayout: "main",
@@ -15,10 +17,16 @@ const hbs = exphbs.create({
 });
 //#endregion
 
+//REDIS = Remote Dictionary Server
+// const client = createClient({
+//     url: "redis://127.0.0.1:6379"
+// });
+
 const app = express();
-//express.static("photos");
+express.static("photos");
 app.use(cookieParser());
-app.use(session({
+app.use(
+session({
     secret: process.env.SESSION_KEY,
     resave: false,
     saveUninitialized: false,
@@ -34,7 +42,7 @@ app.set("views", path.join("src", "views"));
 app.use(express.urlencoded({ extended: true }));
 app.use(siteRoutes);
 app.use("/user", userRoutes);
-
+    
 app.listen(PORT, () => {
     console.log(`Server is running http://localhost:${PORT}`);
 });

@@ -22,14 +22,16 @@
         </li>
         {{#if user}}
         {{else}}
-  <li class="nav-item">
+        <li class="nav-item">
           <a class="nav-link" href="/user/signup">Registration</a>
         </li>
-         <li class="nav-item">
+        <li class="nav-item">
           <a class="nav-link" href="/user/signin">Authorization</a>
         </li>
         {{/if}}
-      
+        <li class="nav-item">
+          <a class="nav-link" href="/user/feedback">Feedback</a>
+        </li>
     </div>
     {{#if user}}<div>Hello {{user}}! <a href="/user/logout">Logout</a></div>{{/if}}
   </div>

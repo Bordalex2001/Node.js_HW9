@@ -37,7 +37,7 @@ userRoutes.route("/signin")
             login: req.body.login,
             email: req.body.email
         };
-        res.redirect("/");
+        //res.redirect("/");
 });
 
 userRoutes.get("/logout", (req, res) => {
@@ -46,5 +46,14 @@ userRoutes.get("/logout", (req, res) => {
     }
     res.redirect("/");
 });
+
+// userRoutes
+//     .route("/feedback")
+//     .get((req, res) => {
+//         res.render("form_feedback");
+//     })
+//     .post(feedbackUser, (req, res) => {
+//       
+//     });
 
 export default userRoutes;
