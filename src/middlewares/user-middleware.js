@@ -1,7 +1,6 @@
 import { users } from "../data/users.js";
 import bcrypt from "bcrypt";
 import validator from "validator";
-import authToken from "../auth-token.js";
 import path from "node:path";
 
 export const checkUser = (req, res, next) => {
@@ -39,8 +38,8 @@ export const createUser = (req, res, next) => {
                 id: users.length + 1,
                 login: login,
                 email: email,
-                password: hash
-                //image: login + path.extname(req.file.originalname)
+                password: hash,
+                image: login + path.extname(req.file.originalname)
             });
             next();
             return;
@@ -52,13 +51,9 @@ export const createUser = (req, res, next) => {
 export const authUser = (req, res, next) => {
     if (req.body && req.body.login && req.body.password){
         const { login, password } = req.body;
-        //console.log(req.body);
-        const token = authToken.generateToken(req.body);
         const user = users?.find((el) => el.login == login);
-        console.log(user);
         if(bcrypt.compareSync(password, user.password)){
             req.body.email = user.email;
-            res.json({ token: token });
             next();
             return;
         }
