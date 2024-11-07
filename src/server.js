@@ -23,7 +23,6 @@ const hbs = exphbs.create({
 // });
 
 const app = express();
-express.static("photos");
 app.use(cookieParser());
 app.use(
 session({
@@ -35,6 +34,7 @@ session({
 app.use(checkUser);
 //#region handlebars
 app.use(express.static("public"));
+app.use(express.static("photos"));
 app.engine("hbs", hbs.engine);
 app.set("view engine", "hbs");
 app.set("views", path.join("src", "views"));
