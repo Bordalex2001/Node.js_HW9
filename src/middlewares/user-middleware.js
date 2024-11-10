@@ -2,6 +2,10 @@ import { users } from "../data/users.js";
 import bcrypt from "bcrypt";
 import validator from "validator";
 import path from "node:path";
+import { generateNews } from "../newsGenerator.js";
+import nodemailer from "nodemailer";
+
+import 'dotenv/config';
 
 export const checkUser = (req, res, next) => {
     if (req.session && req.session.user){
@@ -63,20 +67,23 @@ export const authUser = (req, res, next) => {
 
 export const feedbackUser = (req, res, next) => {
     if(req.body && req.body.email && req.body.subject && req.body.message){
-        const { email, subject, message } = req.body;
+        const recipient = 'balex0121@gmail.com';
+        const news = generateNews();
+
+        //const { email, subject, message } = req.body;
         const mailOpt = {
-            from: "Oleksii Bordiuzhevych <email>",
-            to: email,
-            subject: subject,
-            text: message
+            from: process.env.SMTP_USER,
+            to: recipient,
+            subject: "Гарна новина для вас!",
+            text: news
         };
 
         const trans = nodemailer.createTransport({
             host: "smtp.gmail.com",
             port: 587,
             auth: {
-                user: "email",
-                pass: PASS
+                user: process.env.SMTP_USER,
+                pass: process.env.SMTP_PASS
             },
             tls: {
                 rejectUnauthorized: true,
