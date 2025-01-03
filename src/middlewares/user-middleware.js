@@ -65,8 +65,9 @@ export const authUser = async (req, res, next) => {
             if (rows.length > 0) {
                 const user = rows[0];
 
-                if (bcrypt.compareSync(password, user.password)) {
+                if (user && bcrypt.compareSync(password, user.password)) {
                     req.body.email = user.email;
+                    req.body.image = user.image;
                     next();
                     return;
                 }
@@ -128,7 +129,6 @@ export const sendNewsletter = (req, res, next) => {
         subject: "Гарна новина для вас!",
         text: news,
     };
-    
     const trans = nodemailer.createTransport({
         host: "smtp.gmail.com",
         port: 587,

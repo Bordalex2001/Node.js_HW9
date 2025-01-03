@@ -26,6 +26,7 @@ userRoutes
         req.session.user = {
             login: req.body.login,
             email: req.body.email,
+            image: req.body.image
         };
     res.redirect("/");
 });
@@ -36,6 +37,7 @@ userRoutes.route("/signin")
         req.session.user = {
             login: req.body.login,
             email: req.body.email,
+            image: req.body.image
         };
     res.redirect("/");
 });
