@@ -33,6 +33,11 @@
           <a class="nav-link" href="/user/feedback">Feedback</a>
         </li>
     </div>
-    {{#if user}}<div>Hello, {{user.login}}! <img src="{{user.image}}" alt="{{user.login}}" class="rounded-circle" width="50px" height="50px"/> <a href="/user/logout">Logout</a></div>{{/if}}
+    {{#if user}}<div>Hello, {{user.login}}! 
+      
+        <img src="/{{user.image}}" alt="{{user.login}}" class="rounded-circle" width="50px" height="50px"/>
+      
+      <a href="/user/logout">Logout</a>
+    {{/if}}
   </div>
 </nav>

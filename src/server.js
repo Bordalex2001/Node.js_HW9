@@ -53,6 +53,7 @@ async function run(client) {
     app.use(express.urlencoded({ extended: true }));
     app.use(siteRoutes);
     app.use("/user", userRoutes);
+    app.use('/photos', express.static(path.join(import.meta.dirname, 'photos')));
   
     app.listen(PORT, () =>
       console.log(`Server is running http://localhost:${PORT}`)
